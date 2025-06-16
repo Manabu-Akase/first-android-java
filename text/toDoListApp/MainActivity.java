@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         // ListViewとtasksを繋げるアダプターの作成
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, tasks);
         listViewTasks.setAdapter(adapter);
-        
-        
+
+
         //ボタンが押された時の動作を設定
         buttonAdd.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,5 +52,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        // 長押しで削除機能の追加
+        listViewTasks.setOnItemLongClickListener((parent, view, position, id) -> {
+            // 指定した位置のタスクをリストから削除
+            tasks.remove(position);
+            // アダプターに変更を通知してListViewを更新
+            adapter.notifyDataSetChanged();
+            // 長押しイベントを消費したことを示す（他の処理に渡さない）
+            return true;
+        });
     }
-}
